@@ -15,7 +15,8 @@ def cleaned_data(PLAYERS):
         fixed["height"] = int(player["height"].split(" ")[0])
         cleaned_players.append(fixed)
 
-    return cleaned_players
+    for key, value in fixed.items():
+        print("{}: {}".format(key, value))
 
 def balance_teams(PLAYERS, TEAMS):
     cleaned_data(PLAYERS)
@@ -38,7 +39,7 @@ def balance_teams(PLAYERS, TEAMS):
 
         return Panthers, Bandits, Warriors
 
-print(cleaned_data(PLAYERS))
-print(balance_teams(PLAYERS, TEAMS))
+cleaned_data(PLAYERS)
+#print(balance_teams(PLAYERS, TEAMS))
 
 #if __name__ == "__main__":
