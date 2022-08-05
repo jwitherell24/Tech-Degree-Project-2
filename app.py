@@ -14,9 +14,10 @@ def cleaned_data(PLAYERS):
             fixed["experience"] = False
         fixed["height"] = int(player["height"].split(" ")[0])
         cleaned_players.append(fixed)
+        for key, value in fixed.items():
+            print("{}: {}".format(key, value))
 
-    for key, value in fixed.items():
-        print("{}: {}".format(key, value))
+    return cleaned_players
 
 def balance_teams(PLAYERS, TEAMS):
     cleaned_data(PLAYERS)
