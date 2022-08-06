@@ -7,7 +7,7 @@ import random
 teams = TEAMS.copy()
 players = PLAYERS.copy()
 cleaned_players = []
-num_players_team = len(players) / len(teams)
+num_players_team = int(len(players) / len(teams))
 panthers = []
 bandits = []
 warriors = []
@@ -31,19 +31,31 @@ def clean_data(players):
             else:
                 print("{}: {}".format(key, value))
 
+def equal_team(team):
+    while True:
+        if len(team) == num_players_team:
+            break
+        elif len(team) < (num_players_team / 2):
+            player = experienced.pop()
+            team.append(player)
+            continue
+        elif len(team) >= (num_players_team / 2):
+            player = inexperienced.pop()
+            team.append(player)
+            continue
+
 def balance_teams(cleaned_players):
-    equal_experience = num_players_team / 2
     for player in cleaned_players:
         if player["experience"] == True:
             experienced.append(player)
+
         else:
-            inexperienced.append(player
+            inexperienced.append(player)
+    equal_team(panthers)
+    equal_team(bandits)
+    equal_team(warriors)
 
-
-
-
-
+#if __name__ == "__main__":
 def main():
     clean_data(players)
     balance_teams(cleaned_players)
-#if __name__ == "__main__":
