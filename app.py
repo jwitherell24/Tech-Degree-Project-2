@@ -1,41 +1,29 @@
 from constants import TEAMS
 from constants import PLAYERS
+import copy
 
-if __name__ == "__main__":
-    def cleaned_data(PLAYERS):
-        cleaned_players = []
-        for player in PLAYERS:
-            fixed = {}
-            fixed["name"] = player["name"]
-            fixed["guardians"] = player["guardians"]
-            if player["experience"] == "YES":
-                fixed["experience"] = True
+teams = TEAMS.copy()
+players = PLAYERS.copy()
+cleaned_players = []
+
+def clean_data(players):
+    for player in players:
+        fixed = {}
+        fixed["name"] = player["name"]
+        fixed["guardians"] = player["guardians"].split(" and ")
+        if player["experience"] == "YES":
+            fixed["experience"] = True
+        else:
+            fixed["experience"] = False
+        fixed["height"] = int(player["height"].split(" ")[0])
+        cleaned_players.append(fixed)
+        for key, value in fixed.items():
+            if key == "name":
+                print("\n{}:{}".format(key, value))
             else:
-                fixed["experience"] = False
-            fixed["height"] = int(player["height"].split(" ")[0])
-            cleaned_players.append(fixed)
-            for key, value in fixed.items():
-                print("{}: {}".format(key, value))
+                print("{}:{}".format(key, value))
 
-        return cleaned_players
+def main():
+    clean_data(players)
 
-    def balance_teams(PLAYERS, TEAMS):
-        cleaned_data(PLAYERS)
-        while True:
-            Panthers = []
-            Bandits = []
-            Warriors = []
-            for player in cleaned_data(PLAYERS):
-                if len(Panthers) < 6:
-                    Panthers.append(player)
-                    continue
-                if len(Bandits) < 6:
-                    Bandits.append(player)
-                    continue
-                if len(Warriors) < 6:
-                    Warriors.append(player)
-                    continue
-                else:
-                    break
-
-            return Panthers, Bandits, Warriors
+#if __name__ == "__main__":
