@@ -12,6 +12,7 @@ warriors = []
 experienced = []
 inexperienced = []
 
+
 def clean_data(players):
     for player in players:
         fixed = {}
@@ -68,9 +69,6 @@ def main_menu():
     option_1 = input("Please enter an option:  ")
 
     while True:
-        if option_1.lower() == "b":
-            print("Thank you for browsing.")
-            break
         if option_1.lower() != "a" and "b":
             option_1= input("That is an invalid value, please try again. (A or B)  ")
             continue
@@ -84,25 +82,60 @@ def main_menu():
             while True:
                 if option_2.lower() == "a":
                     print(f"""\nTeam: {TEAMS[0]} Stats
-------------------------""")
-                    team_menu(panthers)
-                    break
-                if option_2.lower() == "b":
+{"-" * 25}""")
+                    team_stats(panthers)
+                elif option_2.lower() == "b":
                     print(f"""\nTeam: {TEAMS[1]} Stats
-------------------------""")
-                    team_menu(bandits)
-                    break
-                if option_2.lower() == "c":
+{"-" * 25}""")
+                    team_stats(bandits)
+                elif option_2.lower() == "c":
                     print(f"""\nTeam: {TEAMS[2]} Stats
-------------------------""")
-                    team_menu(warriors)
-                    break
+{"-" * 25}""")
+                    team_stats(warriors)
                 if option_2.lower() != "a" and "b" and "c":
                     option_2 = input("That is an invalid value, please try again. (A, B, or C)  ")
                     continue
+        elif option_1.lower() == "b":
+            print("Thank you for browsing.")
+            break
 
-def team_menu(team):
-    print(f"Total Players: {len(team)}")
+def team_stats(team):
+    player_names = []
+    experienced = []
+    inexperienced = []
+    player_heights = []
+    guardians = []
+
+    for player in team:
+        player_names.append(player["name"])
+        if player["experience"] == True:
+            experienced.append(player)
+        if player["experience"] == False:
+            inexperienced.append(player)
+        player_heights.append(player["height"])
+        guardians.append(player["guardians"])
+
+    print(f"""Total Players: {len(team)}
+Total Experienced: {len(experienced)}
+Total Inexperienced: {len(inexperienced)}
+Average Height: {int(sum(player_heights) / num_players_team)}\n
+Players:
+{", ".join(player_names)}
+\nGuardians:""")
+    enum_guardians = []
+    for i, guardian in enumerate(guardians):
+        enum_guardians += guardians[i]
+    print(", ".join(enum_guardians))
+
+    back_to_menu = input("\nWould you like to go back to the main menu?(Y / N)  ")
+    while True:
+        if back_to_menu.lower() == "y":
+            main_menu()
+        elif back_to_menu.lower() == "n":
+            print("Thanks for browsing!")
+            break
+        if back_to_menu.lower() != "y" and "n":
+            back_to_menu = input("Sorry, that is not a valid entry. Please try again. (Y / N)  ")
 
 def main():
     clean_data(players)
