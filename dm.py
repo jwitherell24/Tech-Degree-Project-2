@@ -43,7 +43,6 @@ def balance_teams(cleaned_players):
     for player in cleaned_players:
         if player["experience"] is True:
             experienced.append(player)
-
         else:
             inexperienced.append(player)
 
