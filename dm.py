@@ -24,13 +24,6 @@ def clean_data(players):
         fixed["height"] = int(player["height"].split(" ")[0])
         cleaned_players.append(fixed)
 
-        if __name__ == "__main__":
-            for key, value in fixed.items():
-                if key == "name":
-                    print("\n{}: {}".format(key, value))
-                else:
-                    print("{}: {}".format(key, value))
-
 
 def equal_team(team):
     while True:
