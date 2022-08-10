@@ -1,6 +1,5 @@
 from constants import TEAMS
 from constants import PLAYERS
-import copy
 
 teams = TEAMS.copy()
 players = PLAYERS.copy()
@@ -32,6 +31,7 @@ def clean_data(players):
                 else:
                     print("{}: {}".format(key, value))
 
+
 def equal_team(team):
     while True:
         if len(team) == num_players_team:
@@ -45,9 +45,10 @@ def equal_team(team):
             team.append(player)
             continue
 
+
 def balance_teams(cleaned_players):
     for player in cleaned_players:
-        if player["experience"] == True:
+        if player["experience"] is True:
             experienced.append(player)
 
         else:
@@ -56,6 +57,7 @@ def balance_teams(cleaned_players):
     equal_team(panthers)
     equal_team(bandits)
     equal_team(warriors)
+
 
 def main_menu():
     print("""BASKETBALL TEAM STATS TOOL
@@ -69,35 +71,51 @@ def main_menu():
     option_1 = input("Please enter an option:  ")
 
     while True:
-        if option_1.lower() != "a" and "b":
-            option_1= input("That is an invalid value, please try again. (A or B)  ")
+        if option_1.lower() < "a":
+            option_1 = input("\nThat is an invalid value, please try again. (A or B)  ")
             continue
-        if option_1.lower() == "a":
+        if option_1.lower() > "b":
+            option_1 = input("That is an invalid value, please try again. (A or B)  ")
+            continue
+        elif option_1.lower() == "b":
+            print("\nThank you for browsing.")
+            break
+        elif option_1.lower() == "a":
             print("""\nTeams:
             A) Panthers
             B) Bandits
             C) Warriors\n""")
 
-            option_2 = input("Please pick a team.  ")
-            while True:
-                if option_2.lower() == "a":
-                    print(f"""\nTeam: {TEAMS[0]} Stats
-{"-" * 25}""")
-                    team_stats(panthers)
-                elif option_2.lower() == "b":
-                    print(f"""\nTeam: {TEAMS[1]} Stats
-{"-" * 25}""")
-                    team_stats(bandits)
-                elif option_2.lower() == "c":
-                    print(f"""\nTeam: {TEAMS[2]} Stats
-{"-" * 25}""")
-                    team_stats(warriors)
-                if option_2.lower() != "a" and "b" and "c":
-                    option_2 = input("That is an invalid value, please try again. (A, B, or C)  ")
-                    continue
-        elif option_1.lower() == "b":
-            print("Thank you for browsing.")
+            team_menu()
             break
+
+
+def team_menu():
+    option_2 = input("Please pick a team.  ")
+
+    while True:
+        if option_2.lower() < "a":
+            option_2 = input("That is an invalid value, please try again. (A, B, or C)  ")
+            continue
+        if option_2.lower() > "c":
+            option_2 = input("That is an invalid value, please try again. (A, B, or C)  ")
+            continue
+        elif option_2.lower() == "a":
+            print(f"""\nTeam: {TEAMS[0]} Stats
+    {"-" * 25}""")
+            team_stats(panthers)
+            break
+        elif option_2.lower() == "b":
+            print(f"""\nTeam: {TEAMS[1]} Stats
+{"-" * 25}""")
+            team_stats(bandits)
+            break
+        elif option_2.lower() == "c":
+            print(f"""\nTeam: {TEAMS[2]} Stats
+{"-" * 25}""")
+            team_stats(warriors)
+            break
+
 
 def team_stats(team):
     player_names = []
@@ -108,9 +126,9 @@ def team_stats(team):
 
     for player in team:
         player_names.append(player["name"])
-        if player["experience"] == True:
+        if player["experience"] is True:
             experienced.append(player)
-        if player["experience"] == False:
+        if player["experience"] is False:
             inexperienced.append(player)
         player_heights.append(player["height"])
         guardians.append(player["guardians"])
@@ -127,15 +145,11 @@ Players:
         enum_guardians += guardians[i]
     print(", ".join(enum_guardians))
 
-    back_to_menu = input("\nWould you like to go back to the main menu?(Y / N)  ")
-    while True:
-        if back_to_menu.lower() == "y":
-            main_menu()
-        elif back_to_menu.lower() == "n":
-            print("Thanks for browsing!")
-            break
-        if back_to_menu.lower() != "y" and "n":
-            back_to_menu = input("Sorry, that is not a valid entry. Please try again. (Y / N)  ")
+    print("\nPress any key to go back to main menu.")
+    back_to_menu = input("> ")
+
+    main_menu()
+
 
 def main():
     clean_data(players)
